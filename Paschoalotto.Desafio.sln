@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paschoalotto.Desafio.Domain
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paschoalotto.Desafio.Application", "Paschoalotto.Desafio.Application\Paschoalotto.Desafio.Application.csproj", "{58F32F26-4633-4B0C-99C8-C3E5E5F1FAF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paschoalotto.Desafio.Infrastructure", "Paschoalotto.Desafio.Infrastructure\Paschoalotto.Desafio.Infrastructure.csproj", "{960D3545-64EF-4416-B907-2BF3A56EDA21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{58F32F26-4633-4B0C-99C8-C3E5E5F1FAF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58F32F26-4633-4B0C-99C8-C3E5E5F1FAF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58F32F26-4633-4B0C-99C8-C3E5E5F1FAF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{960D3545-64EF-4416-B907-2BF3A56EDA21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{960D3545-64EF-4416-B907-2BF3A56EDA21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{960D3545-64EF-4416-B907-2BF3A56EDA21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{960D3545-64EF-4416-B907-2BF3A56EDA21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
