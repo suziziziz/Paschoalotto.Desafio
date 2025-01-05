@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Paschoalotto.Desafio.Application.Mappings;
+using Paschoalotto.Desafio.Application.Services;
 using Paschoalotto.Desafio.Domain.Repositories;
 using Paschoalotto.Desafio.Infrastructure.Context;
 using Paschoalotto.Desafio.Infrastructure.Repositories;
@@ -25,6 +26,8 @@ public static class InjectDependencies
         services.AddDbContext<DesafioDbContext>(options => options.UseNpgsql(connectionString));
 
         services.AddScoped<IUserRepository, UserRepository>();
+
+        services.AddScoped<IUserService, UserService>();
 
         services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
