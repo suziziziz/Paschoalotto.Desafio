@@ -41,10 +41,8 @@ public class UserController(IUserService service) : ControllerBase
                 ? Ok(new ResponseModel { Data = entity })
                 : BadRequest("Não foi possível atualizar o usuário!");
         }
-        catch (DomainEntityException e)
-        {
-            return BadRequest(new ResponseModel { ErrorMessage = e.Message });
-        }
+        catch (DomainEntityException e) { return BadRequest(new ResponseModel { ErrorMessage = e.Message }); }
+        catch (BadRequestException e) { return BadRequest(new ResponseModel { ErrorMessage = e.Message }); }
     }
 
     [HttpPost()]
@@ -58,9 +56,7 @@ public class UserController(IUserService service) : ControllerBase
                 ? Ok(new ResponseModel { Data = entity })
                 : BadRequest("Não foi possível criar o usuário!");
         }
-        catch (DomainEntityException e)
-        {
-            return BadRequest(new ResponseModel { ErrorMessage = e.Message });
-        }
+        catch (DomainEntityException e) { return BadRequest(new ResponseModel { ErrorMessage = e.Message }); }
+        catch (BadRequestException e) { return BadRequest(new ResponseModel { ErrorMessage = e.Message }); }
     }
 }

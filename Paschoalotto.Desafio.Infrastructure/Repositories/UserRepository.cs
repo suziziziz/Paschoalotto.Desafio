@@ -48,4 +48,12 @@ public class UserRepository(DesafioDbContext db) : IUserRepository
 
         return entity;
     }
+
+    public async Task<bool> IsDuplicated(User user)
+    {
+        var finded = await _db.Users.AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id != user.Id && (x.Username == user.Username || x.Email == user.Email));
+
+        return finded != null;
+    }
 }
