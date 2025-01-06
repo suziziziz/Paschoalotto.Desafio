@@ -1,3 +1,6 @@
+using dotenv.net;
+using dotenv.net.Utilities;
+
 using Microsoft.EntityFrameworkCore;
 
 using Paschoalotto.Desafio.Domain.Entities;
@@ -12,5 +15,16 @@ public class DesafioDbContext(DbContextOptions<DesafioDbContext> options) : DbCo
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(DesafioDbContext).Assembly);
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+
+        DotEnv.Load(new DotEnvOptions(envFilePaths: ["../.env"]));
+
+        var connectionString = EnvReader.GetStringValue("DESAFIODB_CONNECTION_STRING");
+
+        optionsBuilder.UseNpgsql(connectionString);
     }
 }

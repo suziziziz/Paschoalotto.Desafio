@@ -19,11 +19,7 @@ public static class InjectDependencies
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        DotEnv.Load(new DotEnvOptions(envFilePaths: ["../.env"]));
-
-        var connectionString = EnvReader.GetStringValue("DESAFIODB_CONNECTION_STRING");
-
-        services.AddDbContext<DesafioDbContext>(options => options.UseNpgsql(connectionString));
+        services.AddDbContext<DesafioDbContext>();
 
         services.AddScoped<IUserRepository, UserRepository>();
 
