@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import { User } from "./models/user";
+import UserService from "./services/user-service";
+import { AxiosError } from "axios";
+import { ResponseModel } from "./models/response-model";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    UserService.getAll()
+      .then((res) => {
+        setUsers(res.data.data || []);
+
+        console.log(res.data);
+      })
+      .catch((err) => {
+        if (err instanceof AxiosError)
+          alert(
+            "Erro ao carregar os usuários: " +
+              (err.response?.data as ResponseModel<unknown>).errorMessage
+          );
+      });
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>Imagem</th>
+            <th>Nome</th>
+            <th>Usuário</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td>
+                <img src={user.picture} width={64} height={64} />
+              </td>
+              <td width="100%">{user.fullName}</td>
+              <td>@{user.username}</td>
+              <td>{user.email}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </main>
+  );
 }
 
-export default App
+export default App;
