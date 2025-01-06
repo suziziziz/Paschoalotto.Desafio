@@ -21,7 +21,7 @@ public class DesafioDbContext(DbContextOptions<DesafioDbContext> options) : DbCo
     {
         base.OnConfiguring(optionsBuilder);
 
-        DotEnv.Load(new DotEnvOptions(envFilePaths: ["../.env"]));
+        DotEnv.Load(new DotEnvOptions(envFilePaths: ["../.env", ".env"]));
 
         var connectionString = EnvReader.GetStringValue("DESAFIODB_CONNECTION_STRING");
 

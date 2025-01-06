@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paschoalotto.Desafio.Infras
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paschoalotto.Desafio.Api", "Paschoalotto.Desafio.Api\Paschoalotto.Desafio.Api.csproj", "{A799F0E6-5761-4993-99FB-5D316BFDEA02}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paschoalotto.Desafio.Seeder", "Paschoalotto.Desafio.Seeder\Paschoalotto.Desafio.Seeder.csproj", "{0E6FD9DC-3CF2-4AD9-899B-7D30B4977807}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{A799F0E6-5761-4993-99FB-5D316BFDEA02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A799F0E6-5761-4993-99FB-5D316BFDEA02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A799F0E6-5761-4993-99FB-5D316BFDEA02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E6FD9DC-3CF2-4AD9-899B-7D30B4977807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E6FD9DC-3CF2-4AD9-899B-7D30B4977807}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E6FD9DC-3CF2-4AD9-899B-7D30B4977807}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E6FD9DC-3CF2-4AD9-899B-7D30B4977807}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

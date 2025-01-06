@@ -15,8 +15,6 @@ public partial class DomainUserValidation
         if (string.IsNullOrWhiteSpace(user.Username))
             throw new DomainEntityException("É obrigatório preencher o nome de usuário.");
 
-        Console.WriteLine('"' + UsernameRegex().Replace(user.Username, "") + '"');
-
         if (UsernameRegex().Replace(user.Username, "").Length > 0)
             throw new DomainEntityException(
                 """Nome de usuário deve conter apenas letras, números e/ou "_".""");
@@ -53,7 +51,7 @@ public partial class DomainUserValidation
     /// <summary>
     /// Credits: regexr.com/3bfsi
     /// </summary>
-    [GeneratedRegex(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$", RegexOptions.Multiline)]
+    [GeneratedRegex(@"^.{8,}$", RegexOptions.Multiline)]
     private static partial Regex PasswordRegex();
 
     /// <summary>
