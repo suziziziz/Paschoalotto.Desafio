@@ -13,9 +13,11 @@ public class UserService(IUserRepository user, IMapper mapper) : IUserService
     private readonly IUserRepository _user = user;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<IEnumerable<UserDTO>> FindAll()
+    public async Task<int> PageCount() => await _user.PageCountAsync();
+
+    public async Task<IEnumerable<UserDTO>> FindAll(int page = 1)
     {
-        var users = await _user.GetAllAsync();
+        var users = await _user.GetAllAsync(page: page);
         var usersResponse = _mapper.Map<IEnumerable<UserResponseDTO>>(users);
 
         return _mapper.Map<IEnumerable<UserDTO>>(usersResponse);

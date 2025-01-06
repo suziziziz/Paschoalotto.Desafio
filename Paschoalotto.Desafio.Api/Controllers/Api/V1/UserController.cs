@@ -15,11 +15,19 @@ public class UserController(IUserService service) : ControllerBase
     private readonly IUserService _service = service;
 
     [HttpGet()]
-    public async Task<ActionResult<IEnumerable<UserDTO>>> Get()
+    public async Task<ActionResult<IEnumerable<UserDTO>>> Get(
+        [FromQuery] int? page)
     {
-        var users = await _service.FindAll();
+        var users = await _service.FindAll(page: page ?? 1);
+        var pageCount = await _service.PageCount();
 
-        return Ok(new ResponseModel { Data = users });
+        return Ok(
+            new ResponseModel
+            {
+                Data = users,
+                Page = page ?? 1,
+                PageCount = pageCount,
+            });
     }
 
     [HttpGet("{id}")]

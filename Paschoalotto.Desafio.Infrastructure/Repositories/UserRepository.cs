@@ -13,9 +13,22 @@ public class UserRepository(DesafioDbContext db) : IUserRepository
 {
     private readonly DesafioDbContext _db = db;
 
-    public async Task<IEnumerable<User>> GetAllAsync()
+    private const int PageSize = 50;
+
+    public async Task<int> PageCountAsync()
+    {
+        return await _db.Users.AsNoTracking()
+            .OrderBy(x => x.FullName)
+            .Where(x => x.DeletedAt == null)
+            .CountAsync() / PageSize;
+    }
+
+    public async Task<IEnumerable<User>> GetAllAsync(int page = 1)
     {
         var users = await _db.Users.AsNoTracking()
+            .OrderBy(x => x.FullName)
+            .Skip((page - 1) * PageSize)
+            .Take(PageSize)
             .Where(x => x.DeletedAt == null)
             .ToListAsync();
 
