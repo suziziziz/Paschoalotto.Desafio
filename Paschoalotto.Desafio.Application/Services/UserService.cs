@@ -16,16 +16,17 @@ public class UserService(IUserRepository user, IMapper mapper) : IUserService
     public async Task<IEnumerable<UserDTO>> FindAll()
     {
         var users = await _user.GetAllAsync();
+        var usersResponse = _mapper.Map<IEnumerable<UserResponseDTO>>(users);
 
-        return _mapper.Map<IEnumerable<UserDTO>>(users);
+        return _mapper.Map<IEnumerable<UserDTO>>(usersResponse);
     }
 
     public async Task<UserDTO?> FindById(string id)
     {
         var user = await _user.GetByIdAsync(id);
-        var entityDTO = _mapper.Map<UserDTO>(user);
+        var entityDTO = _mapper.Map<UserResponseDTO>(user);
 
-        return entityDTO;
+        return _mapper.Map<UserDTO>(entityDTO);
     }
 
     public async Task<UserDTO?> Update(string id, UserDTO entity)
@@ -35,7 +36,7 @@ public class UserService(IUserRepository user, IMapper mapper) : IUserService
 
         await VerifyDuplicate(user);
 
-        var updatedEntity = await _user.UpdateAsync(user);
+        var updatedEntity = _mapper.Map<UserResponseDTO>(await _user.UpdateAsync(user));
 
         return _mapper.Map<UserDTO>(updatedEntity);
     }
@@ -46,7 +47,7 @@ public class UserService(IUserRepository user, IMapper mapper) : IUserService
 
         await VerifyDuplicate(user);
 
-        var createdEntity = await _user.CreateAsync(user);
+        var createdEntity = _mapper.Map<UserResponseDTO>(await _user.CreateAsync(user));
 
         return _mapper.Map<UserDTO>(createdEntity);
     }
