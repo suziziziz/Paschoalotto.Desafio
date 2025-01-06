@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 using Paschoalotto.Desafio.Domain.Entities;

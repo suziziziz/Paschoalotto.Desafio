@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Paschoalotto.Desafio.Infrastructure.Context;
@@ -11,9 +12,11 @@ using Paschoalotto.Desafio.Infrastructure.Context;
 namespace Paschoalotto.Desafio.Infrastructure.Migrations
 {
     [DbContext(typeof(DesafioDbContext))]
-    partial class DesafioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250106170834_addSaltToUser")]
+    partial class addSaltToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

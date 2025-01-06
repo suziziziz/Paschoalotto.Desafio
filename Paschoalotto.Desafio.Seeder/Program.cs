@@ -1,7 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Text;
+
+using dotenv.net;
+
+using Microsoft.EntityFrameworkCore;
 
 using Paschoalotto.Desafio.Domain.Entities;
 using Paschoalotto.Desafio.Infrastructure.Context;
+using Paschoalotto.Desafio.Infrastructure.Helpers;
 using Paschoalotto.Desafio.Infrastructure.Repositories;
 using Paschoalotto.Desafio.Seeder;
 
@@ -21,6 +26,8 @@ static async Task<UsersModel?> GetManyUsers()
 
 static async Task Run()
 {
+    DotEnv.Load(new DotEnvOptions(envFilePaths: ["../.env", ".env"]));
+
     using var db = new DesafioDbContext(new DbContextOptions<DesafioDbContext>());
 
     var userRepo = new UserRepository(db);
@@ -37,7 +44,10 @@ static async Task Run()
                 fullName: user.Name?.First + " " + user.Name?.Last,
                 username: user.Login?.Username ?? "",
                 email: user.Email ?? "",
-                password: user.Login?.Password ?? "",
+                password: PasswordHashHelper.Hash(
+                    user.Login?.Password!,
+                    Encoding.ASCII.GetBytes(user.Login!.Salt!)),
+                salt: user.Login?.Salt!,
                 picture: user.Picture?.Large ?? ""
             ));
 

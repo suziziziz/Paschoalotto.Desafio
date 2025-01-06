@@ -1,9 +1,11 @@
+using System.Security.Cryptography;
 
 using Microsoft.EntityFrameworkCore;
 
 using Paschoalotto.Desafio.Domain.Entities;
 using Paschoalotto.Desafio.Domain.Repositories;
 using Paschoalotto.Desafio.Infrastructure.Context;
+using Paschoalotto.Desafio.Infrastructure.Helpers;
 
 namespace Paschoalotto.Desafio.Infrastructure.Repositories;
 
@@ -29,6 +31,7 @@ public class UserRepository(DesafioDbContext db) : IUserRepository
 
     public async Task<User?> UpdateAsync(User entity)
     {
+        HashPassword(entity);
         entity.UpdatedAt = DateTime.UtcNow;
 
         _db.Entry(entity).State = EntityState.Modified;
@@ -39,6 +42,7 @@ public class UserRepository(DesafioDbContext db) : IUserRepository
 
     public async Task<User?> CreateAsync(User entity)
     {
+        HashPassword(entity);
         entity.CreatedAt = DateTime.UtcNow;
         entity.UpdatedAt = DateTime.UtcNow;
         entity.Id = Guid.NewGuid().ToString();
@@ -55,5 +59,12 @@ public class UserRepository(DesafioDbContext db) : IUserRepository
             .FirstOrDefaultAsync(x => x.Id != user.Id && (x.Username == user.Username || x.Email == user.Email));
 
         return finded != null;
+    }
+
+    private static void HashPassword(User user)
+    {
+        var salt = RandomNumberGenerator.GetBytes(128 / 8);
+        user.Salt ??= Convert.ToBase64String(salt);
+        user.Password = PasswordHashHelper.Hash(user.Password!, salt);
     }
 }
