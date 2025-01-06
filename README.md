@@ -10,6 +10,10 @@ Rode `docker-compose -f docker-compose.dev.yml up database --build` no terminal 
 
 Antes de rodar a API, duplique o arquivo [.env.example](.env.example) localizado na raiz da aplicação, a configuração padrão já possíbilita a conexão com o banco de dados que está rodando em Docker.
 
+### Rodando Migrações
+
+Rode `dotnet ef database -s Paschoalotto.Desafio.Api -p Paschoalotto.Desafio.Infrastructure update`
+
 ### Populando Usuários
 
 Apenas rode `dotnet run --project Paschoalotto.Desafio.Seeder` no terminal.
