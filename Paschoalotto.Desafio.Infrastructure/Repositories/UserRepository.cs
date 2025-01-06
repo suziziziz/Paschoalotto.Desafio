@@ -36,4 +36,16 @@ public class UserRepository(DesafioDbContext db) : IUserRepository
 
         return entity;
     }
+
+    public async Task<User?> CreateAsync(User entity)
+    {
+        entity.CreatedAt = DateTime.UtcNow;
+        entity.UpdatedAt = DateTime.UtcNow;
+        entity.Id = Guid.NewGuid().ToString();
+
+        _db.Entry(entity).State = EntityState.Added;
+        await _db.SaveChangesAsync();
+
+        return entity;
+    }
 }

@@ -36,4 +36,10 @@ public class UserService(IUserRepository user, IMapper mapper) : IUserService
         return _mapper.Map<UserDTO>(updatedEntity);
     }
 
+    public async Task<UserDTO?> Create(UserDTO entity)
+    {
+        var createdEntity = await _user.CreateAsync(_mapper.Map<User>(entity));
+
+        return _mapper.Map<UserDTO>(createdEntity);
+    }
 }
