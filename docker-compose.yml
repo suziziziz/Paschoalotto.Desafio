@@ -9,4 +9,4 @@ services:
       context: .
       dockerfile: Paschoalotto.Desafio.Api/Dockerfile
     ports:
-      - 5275:5275
+      - 5275:8080
