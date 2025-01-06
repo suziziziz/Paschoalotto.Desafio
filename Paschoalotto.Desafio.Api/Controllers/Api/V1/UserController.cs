@@ -8,9 +8,9 @@ namespace Paschoalotto.Desafio.Api.Controllers.Api.V1;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class UserController(UserService service) : ControllerBase
+public class UserController(IUserService service) : ControllerBase
 {
-    private readonly UserService _service = service;
+    private readonly IUserService _service = service;
 
     [HttpGet()]
     public async Task<ActionResult<IEnumerable<UserDTO>>> Get()
