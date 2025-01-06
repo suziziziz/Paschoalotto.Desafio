@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
+using Paschoalotto.Desafio.Api.Models;
 using Paschoalotto.Desafio.Application.DTOs;
 
 using Paschoalotto.Desafio.Application.Services;
@@ -18,7 +19,7 @@ public class UserController(IUserService service) : ControllerBase
     {
         var users = await _service.FindAll();
 
-        return Ok(users);
+        return Ok(new ResponseModel { Data = users });
     }
 
     [HttpGet("{id}")]
@@ -26,7 +27,7 @@ public class UserController(IUserService service) : ControllerBase
     {
         var entity = await _service.FindById(id);
 
-        return entity == null ? NotFound() : Ok(entity);
+        return entity == null ? NotFound() : Ok(new ResponseModel { Data = entity });
     }
 
     [HttpPut("{id}")]
@@ -36,9 +37,14 @@ public class UserController(IUserService service) : ControllerBase
         {
             var entity = await _service.Update(id, model);
 
-            return entity != null ? Ok(entity) : BadRequest("Não foi possível atualizar o usuário!");
+            return entity != null
+                ? Ok(new ResponseModel { Data = entity })
+                : BadRequest("Não foi possível atualizar o usuário!");
         }
-        catch (DomainEntityException e) { return BadRequest(e.Message); }
+        catch (DomainEntityException e)
+        {
+            return BadRequest(new ResponseModel { ErrorMessage = e.Message });
+        }
     }
 
     [HttpPost()]
@@ -48,8 +54,13 @@ public class UserController(IUserService service) : ControllerBase
         {
             var entity = await _service.Create(model);
 
-            return entity != null ? Ok(entity) : BadRequest("Não foi possível criar o usuário!");
+            return entity != null
+                ? Ok(new ResponseModel { Data = entity })
+                : BadRequest("Não foi possível criar o usuário!");
         }
-        catch (DomainEntityException e) { return BadRequest(e.Message); }
+        catch (DomainEntityException e)
+        {
+            return BadRequest(new ResponseModel { ErrorMessage = e.Message });
+        }
     }
 }
