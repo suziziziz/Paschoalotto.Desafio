@@ -7,8 +7,8 @@ export default class UserService {
 
   private constructor() {}
 
-  static getAll() {
-    return this.api.get<ResponseModel<User[]>>("/User");
+  static getAll(options?: Partial<{ params: { page?: number } }>) {
+    return this.api.get<ResponseModel<User[]>>("/User", options);
   }
 
   static getById(id: string) {

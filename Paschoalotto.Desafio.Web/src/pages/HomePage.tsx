@@ -1,18 +1,20 @@
+import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
+import { ResponseModel } from "../models/response-model";
 import { User } from "../models/user";
 import UserService from "../services/user-service";
-import { AxiosError } from "axios";
-import { ResponseModel } from "../models/response-model";
 
 export default function HomePage() {
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
   const [users, setUsers] = useState<User[]>([]);
 
-  useEffect(() => {
-    UserService.getAll()
+  function fetchUsers(currentPage = 1) {
+    UserService.getAll({ params: { page: currentPage } })
       .then((res) => {
         setUsers(res.data.data || []);
-
-        console.log(res.data);
+        setPage(res.data.page || 1);
+        setPageCount(res.data.pageCount || 1);
       })
       .catch((err) => {
         if (err instanceof AxiosError)
@@ -21,7 +23,14 @@ export default function HomePage() {
               (err.response?.data as ResponseModel<unknown>).errorMessage
           );
       });
-  }, []);
+  }
+
+  useEffect(fetchUsers, []);
+
+  function handleChangePage(page: number) {
+    setPage(page);
+    fetchUsers(page);
+  }
 
   return (
     <main>
@@ -50,6 +59,20 @@ export default function HomePage() {
               </td>
             </tr>
           ))}
+          &nbsp;
+          <div>
+            Página{" "}
+            <input
+              type="number"
+              step={1}
+              min={1}
+              max={pageCount}
+              value={page}
+              onChange={(e) => handleChangePage(+e.target.value)}
+              style={{ display: "inline", width: "2rem" }}
+            />{" "}
+            de {pageCount}
+          </div>
         </tbody>
       </table>
     </main>
