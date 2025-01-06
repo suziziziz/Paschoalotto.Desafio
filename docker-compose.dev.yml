@@ -35,3 +35,15 @@ services:
       - database
     networks:
       - database
+
+  paschoalottodesafioweb:
+    image: paschoalottodesafioweb
+    build:
+      context: Paschoalotto.Desafio.Web
+      dockerfile: Dockerfile
+      args:
+        - api_url=http://localhost:5275/api/v1
+    environment:
+      NODE_ENV: development
+    ports:
+      - 4173:4173

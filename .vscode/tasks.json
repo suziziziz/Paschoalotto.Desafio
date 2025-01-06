@@ -73,20 +73,38 @@
     {
       "type": "docker-run",
       "label": "docker-run: debug",
-      "dependsOn": ["docker-build: debug"],
-      "dockerRun": {},
-      "netCore": {
-        "appProject": "${workspaceFolder}/Paschoalotto.Desafio.Api/Paschoalotto.Desafio.Api.csproj",
+      "dependsOn": ["docker-build"],
+      "dockerRun": {
+        "env": {
+          "DEBUG": "*",
+          "NODE_ENV": "development"
+        }
+      },
+      "node": {
+        "package": "${workspaceFolder}/Paschoalotto.Desafio.Web/package.json",
         "enableDebugging": true
       }
     },
     {
       "type": "docker-run",
       "label": "docker-run: release",
-      "dependsOn": ["docker-build: release"],
-      "dockerRun": {},
-      "netCore": {
-        "appProject": "${workspaceFolder}/Paschoalotto.Desafio.Api/Paschoalotto.Desafio.Api.csproj"
+      "dependsOn": ["docker-build"],
+      "platform": "node",
+      "node": {
+        "package": "${workspaceFolder}/Paschoalotto.Desafio.Web/package.json"
+      }
+    },
+    {
+      "type": "docker-build",
+      "label": "docker-build",
+      "platform": "node",
+      "dockerBuild": {
+        "dockerfile": "${workspaceFolder}/Paschoalotto.Desafio.Web/Dockerfile",
+        "context": "${workspaceFolder}/Paschoalotto.Desafio.Web",
+        "pull": true
+      },
+      "node": {
+        "package": "${workspaceFolder}/Paschoalotto.Desafio.Web/package.json"
       }
     }
   ]
