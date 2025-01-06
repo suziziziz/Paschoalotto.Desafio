@@ -14,4 +14,8 @@ export default class UserService {
   static getById(id: string) {
     return this.api.get<ResponseModel<User>>(`/User/${id}`);
   }
+
+  static update(id: string, user: User) {
+    return this.api.put(`/User/${id}`, user);
+  }
 }
