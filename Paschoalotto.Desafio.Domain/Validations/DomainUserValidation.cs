@@ -15,6 +15,8 @@ public partial class DomainUserValidation
         if (string.IsNullOrWhiteSpace(user.Username))
             throw new DomainEntityException("É obrigatório preencher o nome de usuário.");
 
+        Console.WriteLine('"' + UsernameRegex().Replace(user.Username, "") + '"');
+
         if (UsernameRegex().Replace(user.Username, "").Length > 0)
             throw new DomainEntityException(
                 """Nome de usuário deve conter apenas letras, números e/ou "_".""");
@@ -39,24 +41,24 @@ public partial class DomainUserValidation
                 throw new DomainEntityException("Url da foto do perfil inválida.");
     }
 
-    [GeneratedRegex(@"/[A-z0-9_]+/g")]
+    [GeneratedRegex(@"[A-z0-9_]+")]
     private static partial Regex UsernameRegex();
 
     /// <summary>
     /// Credits: regexr.com/2rhq7
     /// </summary>
-    [GeneratedRegex(@"/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g")]
+    [GeneratedRegex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]
     private static partial Regex EmailRegex();
 
     /// <summary>
     /// Credits: regexr.com/3bfsi
     /// </summary>
-    [GeneratedRegex(@"/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm")]
+    [GeneratedRegex(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$", RegexOptions.Multiline)]
     private static partial Regex PasswordRegex();
 
     /// <summary>
     /// Credits: regexr.com/2rj36
     /// </summary>
-    [GeneratedRegex(@"/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi")]
+    [GeneratedRegex(@"[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?", RegexOptions.IgnoreCase)]
     private static partial Regex UrlRegex();
 }
