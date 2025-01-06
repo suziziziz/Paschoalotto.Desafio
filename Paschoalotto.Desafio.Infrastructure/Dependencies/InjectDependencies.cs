@@ -19,7 +19,7 @@ public static class InjectDependencies
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        DotEnv.Load();
+        DotEnv.Load(new DotEnvOptions(envFilePaths: ["../.env"]));
 
         var connectionString = EnvReader.GetStringValue("DESAFIODB_CONNECTION_STRING");
 
