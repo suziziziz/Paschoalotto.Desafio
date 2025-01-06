@@ -32,7 +32,7 @@
       "request": "launch",
       "preLaunchTask": "docker-run: debug",
       "netCore": {
-        "appProject": "${workspaceFolder}/Paschoalotto.Desafio.Api/Paschoalotto.Desafio.Api.csproj"
+        "appProject": "${workspaceFolder}/Paschoalotto.Desafio.Seeder/Paschoalotto.Desafio.Seeder.csproj"
       }
     },
     {

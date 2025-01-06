@@ -12,6 +12,8 @@ using Paschoalotto.Desafio.Seeder;
 
 using RestSharp;
 
+var firstBoot = args.FirstOrDefault() ?? "false";
+
 static async Task<UsersModel?> GetManyUsers()
 {
     var apiUrl = "https://randomuser.me/api/?results=100"
@@ -24,11 +26,22 @@ static async Task<UsersModel?> GetManyUsers()
     return response;
 }
 
-static async Task Run()
+static async Task Run(string? firstBoot)
 {
     DotEnv.Load(new DotEnvOptions(envFilePaths: ["../.env", ".env"]));
 
     using var db = new DesafioDbContext(new DbContextOptions<DesafioDbContext>());
+
+    if (firstBoot == "true")
+    {
+        await db.Database.MigrateAsync();
+        if (await db.Users.AnyAsync())
+        {
+            Console.WriteLine("Banco de dados já inicializado!");
+
+            return;
+        }
+    }
 
     var userRepo = new UserRepository(db);
 
@@ -55,4 +68,4 @@ static async Task Run()
         }
 }
 
-Run().Wait();
+Run(firstBoot).Wait();

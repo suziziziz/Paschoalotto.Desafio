@@ -19,6 +19,23 @@ services:
     networks:
       - database
 
+  paschoalottodesafioseeder:
+    image: paschoalottodesafioseeder
+    build:
+      context: .
+      dockerfile: Paschoalotto.Desafio.Seeder/Dockerfile
+      args:
+        - configuration=Debug
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DESAFIODB_CONNECTION_STRING=Username=postgres;Password=!desafio@1234#;Host=database;Database=desafio_paschoalotto;"
+      - PASSWORD_HASH_ITERATION_COUNT=100000
+    depends_on:
+      - database
+    networks:
+      - database
+    restart: on-failure
+
   paschoalottodesafioapi:
     image: paschoalottodesafioapi
     build:
@@ -33,9 +50,10 @@ services:
       - "DESAFIODB_CONNECTION_STRING=Username=postgres;Password=!desafio@1234#;Host=database;Database=desafio_paschoalotto;"
       - PASSWORD_HASH_ITERATION_COUNT=100000
     depends_on:
-      - database
+      - paschoalottodesafioseeder
     networks:
       - database
+    restart: on-failure
 
   paschoalottodesafioweb:
     image: paschoalottodesafioweb
@@ -48,3 +66,6 @@ services:
       NODE_ENV: development
     ports:
       - 4173:4173
+    depends_on:
+      - paschoalottodesafioapi
+    restart: on-failure
